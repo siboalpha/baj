@@ -10,6 +10,8 @@ services:
       - "3000"
     networks:
       - dokploy-network
+    labels:
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
 
   dashboard:
     build:
@@ -22,6 +24,8 @@ services:
       - "3000"
     networks:
       - dokploy-network
+    labels:
+      - "traefik.http.services.dashboard.loadbalancer.server.port=3000"
 
 networks:
   dokploy-network:
