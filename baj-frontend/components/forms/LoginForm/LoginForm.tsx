@@ -11,9 +11,9 @@ export default function LoginForm() {
   const { requestOtp } = useAuth();
   const router = useRouter();
 
-  const [phone,   setPhone]   = useState('');
+  const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState('');
+  const [error, setError] = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -66,7 +66,7 @@ export default function LoginForm() {
       </Button>
 
       <p className={styles.devHint}>
-        Dev: <span className={styles.devVal}>0788009976</span>
+        Test Phone number: <span className={styles.devVal}>0788009976</span>
       </p>
     </form>
   );
