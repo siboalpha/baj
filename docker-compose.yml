@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
 
   dashboard:
     build:
@@ -16,5 +16,5 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-    ports:
-      - "3001:3000"
+    expose:
+      - "3000"
