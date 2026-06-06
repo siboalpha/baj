@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+      - PORT=3000
     expose:
       - "3000"
     networks:
@@ -20,12 +21,13 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+      - PORT=3001
     expose:
-      - "3000"
+      - "3001"
     networks:
       - dokploy-network
     labels:
-      - "traefik.http.services.dashboard.loadbalancer.server.port=3000"
+      - "traefik.http.services.dashboard.loadbalancer.server.port=3001"
 
 networks:
   dokploy-network:
