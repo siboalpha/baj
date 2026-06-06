@@ -1,0 +1,99 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+/* ── Sent-to label ───────────────────────────────────────── */
+.sentTo {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.phone {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+/* ── OTP boxes ───────────────────────────────────────────── */
+.boxes {
+  display: flex;
+  gap: var(--sp-3);
+  justify-content: center;
+}
+
+.box {
+  width: 60px;
+  height: 64px;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-semibold);
+  text-align: center;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow   var(--dur-fast) var(--ease-out),
+    background   var(--dur-fast) var(--ease-out);
+  /* Remove browser spin buttons */
+  appearance: textfield;
+}
+
+.box:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-focus);
+}
+
+.box[data-filled="true"] {
+  border-color: var(--accent-500);
+  background: var(--bg-accent-soft);
+}
+
+.box[data-error="true"] {
+  border-color: var(--status-danger);
+  background: var(--status-danger-soft);
+}
+
+.box:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Error text ──────────────────────────────────────────── */
+.error {
+  font-size: var(--fs-sm);
+  color: var(--status-danger);
+  text-align: center;
+  margin-top: calc(var(--sp-2) * -1);
+}
+
+/* ── Resend ──────────────────────────────────────────────── */
+.resend {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.resendLink {
+  color: var(--text-accent);
+  text-decoration: none;
+  font-weight: var(--fw-medium);
+}
+
+.resendLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 360px) {
+  .box {
+    width: 52px;
+    height: 56px;
+    font-size: var(--fs-2xl);
+  }
+}

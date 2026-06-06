@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BAJ Ltd — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="./showcase.css" />
+
+  <style>
+    /* ── Inline token overrides for specimens ─────────────── */
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: none; border-radius: var(--r-md); cursor: pointer;
+      font-family: var(--font-sans); font-weight: var(--fw-medium);
+      font-size: var(--fs-md); padding: 0 var(--sp-4); height: 36px;
+      transition: background var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-fast) var(--ease-out),
+                  opacity var(--dur-fast) var(--ease-out);
+      white-space: nowrap;
+    }
+    .btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+    .btn--sm { height: 28px; font-size: var(--fs-sm); padding: 0 var(--sp-3); }
+    .btn--lg { height: 44px; font-size: var(--fs-lg); padding: 0 var(--sp-5); }
+    .btn--primary   { background: var(--bg-accent); color: var(--text-on-accent); }
+    .btn--primary:hover { background: var(--accent-800); }
+    .btn--primary:active { background: var(--accent-900); }
+    .btn--secondary { background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border-default); }
+    .btn--secondary:hover { background: var(--bg-hover); border-color: var(--border-strong); }
+    .btn--ghost     { background: transparent; color: var(--text-secondary); }
+    .btn--ghost:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .btn--danger    { background: var(--status-danger); color: var(--n-0); }
+    .btn--danger:hover { filter: brightness(0.9); }
+    .btn--lime      { background: var(--lime-500); color: var(--n-0); }
+    .btn--lime:hover { background: var(--lime-600); }
+    .btn:disabled   { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+    /* Badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: var(--r-full);
+      font-family: var(--font-mono); font-size: var(--fs-2xs);
+      font-weight: var(--fw-medium); white-space: nowrap;
+    }
+    .badge--neutral  { background: var(--n-100); color: var(--n-700); }
+    .badge--success  { background: var(--status-success-soft); color: var(--status-success); }
+    .badge--warning  { background: var(--status-warning-soft); color: var(--status-warning); }
+    .badge--danger   { background: var(--status-danger-soft); color: var(--status-danger); }
+    .badge--info     { background: var(--status-info-soft); color: var(--status-info); }
+    .badge--accent   { background: var(--bg-accent-soft); color: var(--text-accent); }
+    .badge--lime     { background: var(--bg-lime-soft); color: var(--text-lime); }
+
+    /* Input */
+    .input-group { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .input-group label { font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-primary); }
+    .input {
+      height: 36px; padding: 0 var(--sp-3);
+      border: 1px solid var(--border-default); border-radius: var(--r-md);
+      background: var(--bg-surface); color: var(--text-primary);
+      font-family: var(--font-sans); font-size: var(--fs-md);
+      transition: border-color var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-fast) var(--ease-out);
+      width: 100%;
+    }
+    .input::placeholder { color: var(--text-tertiary); }
+    .input:focus { outline: none; border-color: var(--border-focus); box-shadow: var(--shadow-focus); }
+    .input:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-sunken); }
+    .input--error { border-color: var(--status-danger); }
+    .input--error:focus { box-shadow: 0 0 0 3px oklch(60% 0.200 25 / 0.25); }
+    textarea.input { height: auto; min-height: 80px; padding: var(--sp-2) var(--sp-3); resize: vertical; }
+    .input-hint { font-size: var(--fs-xs); color: var(--text-tertiary); }
+    .input-hint--error { color: var(--status-danger); }
+
+    /* Toggle */
+    .toggle { display: inline-flex; align-items: center; gap: var(--sp-2); cursor: pointer; }
+    .toggle__track {
+      width: 32px; height: 18px; border-radius: var(--r-full);
+      background: var(--n-300); position: relative;
+      transition: background var(--dur-fast) var(--ease-out);
+      flex-shrink: 0;
+    }
+    .toggle__knob {
+      position: absolute; top: 2px; left: 2px;
+      width: 14px; height: 14px; border-radius: var(--r-full);
+      background: var(--n-0); box-shadow: var(--shadow-sm);
+      transition: left var(--dur-fast) var(--ease-out);
+    }
+    .toggle input { display: none; }
+    .toggle input:checked ~ .toggle__track { background: var(--accent-700); }
+    .toggle input:checked ~ .toggle__track .toggle__knob { left: 16px; }
+    .toggle__label { font-size: var(--fs-sm); color: var(--text-secondary); }
+
+    /* Checkbox */
+    .checkbox { display: inline-flex; align-items: center; gap: var(--sp-2); cursor: pointer; }
+    .checkbox input[type="checkbox"] { display: none; }
+    .checkbox__box {
+      width: 16px; height: 16px; border-radius: var(--r-xs);
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-surface);
+      display: grid; place-items: center;
+      transition: background var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+      flex-shrink: 0;
+    }
+    .checkbox input:checked + .checkbox__box {
+      background: var(--accent-700); border-color: var(--accent-700);
+    }
+    .checkbox input:checked + .checkbox__box::after {
+      content: '';
+      width: 9px; height: 5px;
+      border-left: 2px solid var(--n-0); border-bottom: 2px solid var(--n-0);
+      transform: rotate(-45deg) translateY(-1px);
+    }
+    .checkbox__label { font-size: var(--fs-sm); color: var(--text-secondary); }
+
+    /* Avatar */
+    .avatar {
+      border-radius: var(--r-full); display: grid; place-items: center;
+      font-family: var(--font-mono); font-weight: var(--fw-semibold);
+      border: 1.5px solid var(--bg-surface); flex-shrink: 0;
+    }
+    .avatar--24 { width: 24px; height: 24px; font-size: 10px; }
+    .avatar--32 { width: 32px; height: 32px; font-size: 12px; }
+    .avatar--40 { width: 40px; height: 40px; font-size: 14px; }
+    .avatar--48 { width: 48px; height: 48px; font-size: 16px; }
+    .avatar--accent  { background: var(--accent-700); color: var(--n-0); }
+    .avatar--lime    { background: var(--lime-600); color: var(--n-0); }
+    .avatar--neutral { background: var(--n-300); color: var(--n-700); }
+    .avatar--danger  { background: var(--status-danger); color: var(--n-0); }
+
+    /* Service Pill */
+    .service-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 2px 10px; border-radius: var(--r-full);
+      border: 1px solid var(--border-default);
+      font-family: var(--font-mono); font-size: var(--fs-xs);
+      color: var(--text-secondary); background: var(--bg-surface);
+    }
+    .service-pill__dot { width: 6px; height: 6px; border-radius: var(--r-full); flex-shrink: 0; }
+    .service-pill--collection .service-pill__dot  { background: var(--accent-700); }
+    .service-pill--recycling  .service-pill__dot  { background: var(--lime-500); }
+    .service-pill--disposal   .service-pill__dot  { background: var(--status-danger); }
+    .service-pill--transport  .service-pill__dot  { background: var(--status-info); }
+    .service-pill--consulting .service-pill__dot  { background: var(--status-warning); }
+
+    /* Filter Chip */
+    .filter-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: var(--sp-1) var(--sp-3);
+      border: 1px dashed var(--border-default); border-radius: var(--r-full);
+      font-family: var(--font-mono); font-size: var(--fs-xs);
+      color: var(--text-secondary); cursor: pointer; background: transparent;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .filter-chip:hover { border-style: solid; border-color: var(--border-strong); color: var(--text-primary); }
+    .filter-chip.is-active { border-style: solid; border-color: var(--accent-400); background: var(--bg-accent-soft); color: var(--text-accent); }
+
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+    .data-table thead tr { background: var(--bg-sunken); }
+    .data-table th {
+      padding: var(--sp-2) var(--sp-3); text-align: left;
+      font-size: var(--fs-xs); font-weight: var(--fw-semibold);
+      color: var(--text-tertiary); border-bottom: 1px solid var(--border-default);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: var(--sp-2) var(--sp-3); color: var(--text-primary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .data-table tbody tr:hover td { background: var(--bg-hover); }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table__mono { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-secondary); }
+
+    /* Card */
+    .card {
+      background: var(--bg-surface); border: 1px solid var(--border-default);
+      border-radius: var(--r-lg); box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .card__head {
+      padding: var(--sp-4) var(--sp-5);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card__title { font-size: var(--fs-md); font-weight: var(--fw-semibold); color: var(--text-primary); }
+    .card__body  { padding: var(--sp-5); }
+    .card__foot  {
+      padding: var(--sp-3) var(--sp-5); background: var(--bg-sunken);
+      border-top: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-2);
+    }
+
+    /* Fee Card */
+    .fee-card {
+      background: var(--bg-surface); border: 1px solid var(--border-default);
+      border-radius: var(--r-lg); padding: var(--sp-4);
+      display: flex; align-items: center; gap: var(--sp-3);
+      box-shadow: var(--shadow-sm);
+    }
+    .fee-card__info { flex: 1; min-width: 0; }
+    .fee-card__name { font-size: var(--fs-sm); font-weight: var(--fw-medium); color: var(--text-primary); }
+    .fee-card__address { font-size: var(--fs-xs); color: var(--text-tertiary); margin-top: 2px; }
+    .fee-card__amount { font-family: var(--font-mono); font-size: var(--fs-md); font-weight: var(--fw-semibold); color: var(--text-primary); }
+
+    /* Toast */
+    .toast {
+      display: flex; align-items: flex-start; gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4); border-radius: var(--r-lg);
+      border: 1px solid var(--border-default); background: var(--bg-elevated);
+      box-shadow: var(--shadow-lg); max-width: 360px;
+    }
+    .toast__icon { flex-shrink: 0; margin-top: 1px; }
+    .toast__body { flex: 1; min-width: 0; }
+    .toast__title { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--text-primary); }
+    .toast__desc  { font-size: var(--fs-xs); color: var(--text-secondary); margin-top: 2px; }
+    .toast--success .toast__icon { color: var(--status-success); }
+    .toast--warning .toast__icon { color: var(--status-warning); }
+    .toast--danger  .toast__icon { color: var(--status-danger); }
+    .toast--info    .toast__icon { color: var(--status-info); }
+
+    /* Empty State */
+    .empty-state {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: var(--sp-11) var(--sp-7);
+      text-align: center; gap: var(--sp-3);
+    }
+    .empty-state__icon { color: var(--text-tertiary); }
+    .empty-state__title { font-size: var(--fs-lg); font-weight: var(--fw-semibold); color: var(--text-primary); }
+    .empty-state__desc  { font-size: var(--fs-sm); color: var(--text-secondary); max-width: 36ch; }
+
+    /* Spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 16px; height: 16px; border-radius: var(--r-full);
+      border: 2px solid var(--accent-200); border-top-color: var(--accent-600);
+      animation: spin 700ms linear infinite;
+      display: inline-block;
+    }
+    .spinner--lg { width: 32px; height: 32px; border-width: 3px; }
+
+    /* Skeleton */
+    @keyframes shimmer {
+      0%   { background-position: -400px 0; }
+      100% { background-position:  400px 0; }
+    }
+    .skeleton {
+      background: linear-gradient(90deg, var(--n-150) 25%, var(--n-100) 50%, var(--n-150) 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+      border-radius: var(--r-sm);
+    }
+
+    /* Sidebar (specimen) */
+    .sidebar-spec {
+      width: 240px; background: var(--bg-surface);
+      border: 1px solid var(--border-default); border-radius: var(--r-lg);
+      padding: var(--sp-4) 0; overflow: hidden;
+    }
+    .sidebar-spec__logo {
+      display: flex; align-items: center; gap: var(--sp-2);
+      padding: 0 var(--sp-4) var(--sp-4);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: var(--sp-3);
+    }
+    .sidebar-spec__section-label {
+      padding: var(--sp-1) var(--sp-4);
+      font-family: var(--font-mono); font-size: var(--fs-2xs);
+      font-weight: var(--fw-medium); text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text-tertiary);
+    }
+    .sidebar-spec__link {
+      display: flex; align-items: center; gap: var(--sp-2);
+      padding: var(--sp-2) var(--sp-4);
+      font-size: var(--fs-sm); color: var(--text-secondary);
+      text-decoration: none; cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .sidebar-spec__link:hover { background: var(--bg-hover); color: var(--text-primary); }
+    .sidebar-spec__link.is-active {
+      color: var(--text-accent); border-left-color: var(--accent-600);
+      background: var(--bg-accent-soft); font-weight: var(--fw-medium);
+    }
+
+    /* Tabs */
+    .tabs { border-bottom: 1px solid var(--border-subtle); display: flex; gap: 0; }
+    .tab {
+      padding: var(--sp-2) var(--sp-4); font-size: var(--fs-sm);
+      color: var(--text-secondary); cursor: pointer; border: none;
+      background: transparent; border-bottom: 2px solid transparent;
+      margin-bottom: -1px; display: inline-flex; align-items: center; gap: var(--sp-1);
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .tab:hover { color: var(--text-primary); }
+    .tab.is-active { color: var(--text-accent); border-bottom-color: var(--accent-600); font-weight: var(--fw-medium); }
+
+    /* Modal specimen */
+    .modal-spec {
+      background: var(--bg-elevated); border-radius: var(--r-xl);
+      border: 1px solid var(--border-default); box-shadow: var(--shadow-xl);
+      max-width: 480px; width: 100%; overflow: hidden;
+    }
+    .modal-spec__head {
+      padding: var(--sp-4) var(--sp-5);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-spec__title { font-size: var(--fs-lg); font-weight: var(--fw-semibold); color: var(--text-primary); }
+    .modal-spec__body  { padding: var(--sp-5); }
+    .modal-spec__foot  {
+      padding: var(--sp-3) var(--sp-5);
+      border-top: 1px solid var(--border-subtle); background: var(--bg-sunken);
+      display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-2);
+    }
+
+    /* Stat card */
+    .stat-card {
+      background: var(--bg-surface); border: 1px solid var(--border-default);
+      border-radius: var(--r-lg); padding: var(--sp-4) var(--sp-5);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-card__label { font-size: var(--fs-xs); font-weight: var(--fw-medium); color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--sp-1); }
+    .stat-card__value { font-size: var(--fs-3xl); font-weight: var(--fw-bold); font-family: var(--font-mono); color: var(--text-primary); line-height: 1; margin-bottom: var(--sp-1); }
+    .stat-card__sub   { font-size: var(--fs-xs); color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Topbar ──────────────────────────────────────────────── -->
+<header class="ds-topbar">
+  <div class="ds-topbar__left">
+    <a href="#" class="ds-logo">
+      <div class="ds-logo__mark">BAJ</div>
+      BAJ Ltd
+    </a>
+    <span class="ds-topbar__badge">Design System v1.0</span>
+  </div>
+  <button class="ds-themetoggle" onclick="toggleTheme(this)">◑ Dark</button>
+</header>
+
+<!-- ── Layout ──────────────────────────────────────────────── -->
+<div class="ds-layout">
+
+  <!-- Sidebar TOC -->
+  <nav class="ds-sidebar">
+    <div class="ds-sidebar__section">
+      <div class="ds-sidebar__label">Foundations</div>
+      <a href="#colors" class="ds-sidebar__link is-active">Colors</a>
+      <a href="#typography" class="ds-sidebar__link">Typography</a>
+      <a href="#spacing" class="ds-sidebar__link">Spacing</a>
+      <a href="#radii" class="ds-sidebar__link">Border Radii</a>
+      <a href="#shadows" class="ds-sidebar__link">Shadows</a>
+      <a href="#motion" class="ds-sidebar__link">Motion</a>
+      <a href="#icons" class="ds-sidebar__link">Icons</a>
+    </div>
+    <div class="ds-sidebar__section">
+      <div class="ds-sidebar__label">Components</div>
+      <a href="#buttons" class="ds-sidebar__link">Button</a>
+      <a href="#inputs" class="ds-sidebar__link">Input</a>
+      <a href="#controls" class="ds-sidebar__link">Checkbox &amp; Toggle</a>
+      <a href="#badges" class="ds-sidebar__link">Badge</a>
+      <a href="#pills" class="ds-sidebar__link">Service Pill</a>
+      <a href="#avatars" class="ds-sidebar__link">Avatar</a>
+      <a href="#chips" class="ds-sidebar__link">Filter Chip</a>
+      <a href="#table" class="ds-sidebar__link">Data Table</a>
+      <a href="#cards" class="ds-sidebar__link">Cards</a>
+      <a href="#sidebar-nav" class="ds-sidebar__link">Sidebar Nav</a>
+      <a href="#tabs" class="ds-sidebar__link">Tabs</a>
+      <a href="#modal" class="ds-sidebar__link">Modal</a>
+      <a href="#toast" class="ds-sidebar__link">Toast</a>
+      <a href="#empty" class="ds-sidebar__link">Empty State</a>
+      <a href="#loading" class="ds-sidebar__link">Loading</a>
+      <a href="#fee-card" class="ds-sidebar__link">Fee Card</a>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="ds-page">
+
+    <!-- Hero -->
+    <div class="ds-hero">
+      <div class="ds-hero__kicker">Design System · Version 1.0 · June 2026</div>
+      <h1 class="ds-hero__title">BAJ Ltd</h1>
+      <p class="ds-hero__sub">Leading sustainable waste management in Rwanda. A living reference for all BAJ digital products.</p>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- COLORS                                               -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="colors">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">01 — Foundations</span>
+          <h2 class="ds-section__title">Colors</h2>
+          <p class="ds-section__desc">Two accent scales (green + lime) plus a neutral earth scale and status semantics. Always use semantic tokens in components.</p>
+        </div>
+      </div>
+
+      <!-- Accent Scale -->
+      <h3 style="font-size:var(--fs-md);font-weight:var(--fw-semibold);color:var(--text-primary);margin-bottom:var(--sp-3);">Accent Scale — hue 145</h3>
+      <div class="ds-scale" style="margin-bottom:var(--sp-5);">
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-50)"></div><span class="ds-swatch__step">50</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-100)"></div><span class="ds-swatch__step">100</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-200)"></div><span class="ds-swatch__step">200</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-300)"></div><span class="ds-swatch__step">300</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-400)"></div><span class="ds-swatch__step">400</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-500)"></div><span class="ds-swatch__step">500</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-600)"></div><span class="ds-swatch__step">600</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-700)"></div><span class="ds-swatch__step">700 ★</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-800)"></div><span class="ds-swatch__step">800</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--accent-900)"></div><span class="ds-swatch__step">900</span></div>
+      </div>
+
+      <!-- Lime Scale -->
+      <h3 style="font-size:var(--fs-md);font-weight:var(--fw-semibold);color:var(--text-primary);margin-bottom:var(--sp-3);">Lime Scale — hue 120 (recycling &amp; eco)</h3>
+      <div class="ds-scale" style="margin-bottom:var(--sp-5);">
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-50)"></div><span class="ds-swatch__step">50</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-100)"></div><span class="ds-swatch__step">100</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-200)"></div><span class="ds-swatch__step">200</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-300)"></div><span class="ds-swatch__step">300</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-400)"></div><span class="ds-swatch__step">400</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-500)"></div><span class="ds-swatch__step">500 ★</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-600)"></div><span class="ds-swatch__step">600</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-700)"></div><span class="ds-swatch__step">700</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-800)"></div><span class="ds-swatch__step">800</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--lime-900)"></div><span class="ds-swatch__step">900</span></div>
+      </div>
+
+      <!-- Neutral Scale -->
+      <h3 style="font-size:var(--fs-md);font-weight:var(--fw-semibold);color:var(--text-primary);margin-bottom:var(--sp-3);">Neutral Scale</h3>
+      <div class="ds-scale" style="margin-bottom:var(--sp-5);">
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-0);border:1px solid var(--border-subtle)"></div><span class="ds-swatch__step">0</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-50)"></div><span class="ds-swatch__step">50</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-100)"></div><span class="ds-swatch__step">100</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-200)"></div><span class="ds-swatch__step">200</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-300)"></div><span class="ds-swatch__step">300</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-400)"></div><span class="ds-swatch__step">400</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-500)"></div><span class="ds-swatch__step">500</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-600)"></div><span class="ds-swatch__step">600</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-700)"></div><span class="ds-swatch__step">700</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-800)"></div><span class="ds-swatch__step">800</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-900)"></div><span class="ds-swatch__step">900</span></div>
+        <div class="ds-swatch"><div class="ds-swatch__block" style="background:var(--n-1000)"></div><span class="ds-swatch__step">1000</span></div>
+      </div>
+
+      <!-- Status -->
+      <h3 style="font-size:var(--fs-md);font-weight:var(--fw-semibold);color:var(--text-primary);margin-bottom:var(--sp-3);">Status Colors</h3>
+      <div class="ds-semantic-grid">
+        <div class="ds-semantic-tile">
+          <div class="ds-semantic-tile__dot" style="background:var(--status-success)"></div>
+          <span class="ds-semantic-tile__token">--status-success</span>
+          <span class="ds-semantic-tile__desc">Collection done, paid</span>
+        </div>
+        <div class="ds-semantic-tile">
+          <div class="ds-semantic-tile__dot" style="background:var(--status-warning)"></div>
+          <span class="ds-semantic-tile__token">--status-warning</span>
+          <span class="ds-semantic-tile__desc">Delayed, pending</span>
+        </div>
+        <div class="ds-semantic-tile">
+          <div class="ds-semantic-tile__dot" style="background:var(--status-danger)"></div>
+          <span class="ds-semantic-tile__token">--status-danger</span>
+          <span class="ds-semantic-tile__desc">Missed, overdue</span>
+        </div>
+        <div class="ds-semantic-tile">
+          <div class="ds-semantic-tile__dot" style="background:var(--status-info)"></div>
+          <span class="ds-semantic-tile__token">--status-info</span>
+          <span class="ds-semantic-tile__desc">Informational</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- TYPOGRAPHY                                           -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="typography">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">02 — Foundations</span>
+          <h2 class="ds-section__title">Typography</h2>
+          <p class="ds-section__desc">Inter for all prose and UI. JetBrains Mono for codes, IDs, and fee amounts only.</p>
+        </div>
+      </div>
+
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-6xl</span><span class="ds-type-row__value">64 px / bold</span></div>
+        <span style="font-size:var(--fs-6xl);font-weight:var(--fw-bold);line-height:1">BAJ</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-5xl</span><span class="ds-type-row__value">48 px / bold</span></div>
+        <span style="font-size:var(--fs-5xl);font-weight:var(--fw-bold);line-height:1.15">Waste Management</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-4xl</span><span class="ds-type-row__value">36 px / semibold</span></div>
+        <span style="font-size:var(--fs-4xl);font-weight:var(--fw-semibold)">Environmental Services</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-3xl</span><span class="ds-type-row__value">28 px / semibold</span></div>
+        <span style="font-size:var(--fs-3xl);font-weight:var(--fw-semibold)">Collection Zones</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-2xl</span><span class="ds-type-row__value">22 px / semibold</span></div>
+        <span style="font-size:var(--fs-2xl);font-weight:var(--fw-semibold)">Recycling Program</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-xl</span><span class="ds-type-row__value">18 px / medium</span></div>
+        <span style="font-size:var(--fs-xl);font-weight:var(--fw-medium)">Schedule waste collection</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-lg</span><span class="ds-type-row__value">16 px / regular</span></div>
+        <span style="font-size:var(--fs-lg)">Leading sustainable waste management in Rwanda.</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-md</span><span class="ds-type-row__value">14 px / regular</span></div>
+        <span style="font-size:var(--fs-md)">BAJ Ltd, established in 2013, is a leading provider of waste management and environmental services.</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-sm</span><span class="ds-type-row__value">13 px / regular</span></div>
+        <span style="font-size:var(--fs-sm);color:var(--text-secondary)">We ensure timely, safe, and efficient collection of all types of waste.</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-xs mono</span><span class="ds-type-row__value">12 px / mono</span></div>
+        <span style="font-size:var(--fs-xs);font-family:var(--font-mono);color:var(--text-accent)">RWF 3,500.00 · zone-KGL-05 · #INV-2026-00441</span>
+      </div>
+      <div class="ds-type-row">
+        <div class="ds-type-row__meta"><span class="ds-type-row__token">--fs-2xs</span><span class="ds-type-row__value">11 px / regular</span></div>
+        <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Last collected 3 days ago · Kigali · Gasabo</span>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- SPACING                                              -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="spacing">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">03 — Foundations</span>
+          <h2 class="ds-section__title">Spacing</h2>
+          <p class="ds-section__desc">4 px base grid. 13 steps from 0 to 96 px.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-1);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-1 · 4 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-2);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-2 · 8 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-3);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-3 · 12 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-4);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-4 · 16 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-5);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-5 · 20 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-6);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-6 · 24 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-7);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-7 · 32 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-8);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-8 · 40 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-9);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-9 · 48 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-10);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-10 · 64 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-11);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-11 · 80 px</span></div>
+        <div style="display:flex;align-items:center;gap:var(--sp-3)"><div style="width:var(--sp-12);height:8px;background:var(--accent-400);border-radius:var(--r-full)"></div><span style="font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-secondary)">--sp-12 · 96 px</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- RADII                                                -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="radii">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">04 — Foundations</span>
+          <h2 class="ds-section__title">Border Radii</h2>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--sp-4)">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-xs)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-xs · 4px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-sm)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-sm · 6px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-md)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-md · 8px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-lg)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-lg · 12px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-xl)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-xl · 16px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-2xl)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-2xl · 24px</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:80px;height:80px;background:var(--bg-accent-soft);border:2px solid var(--accent-400);border-radius:var(--r-full)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--r-full</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- SHADOWS                                              -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="shadows">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">05 — Foundations</span>
+          <h2 class="ds-section__title">Shadows</h2>
+          <p class="ds-section__desc">Elevation-based. Use based on layer, not decoration.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--sp-6);padding:var(--sp-5);background:var(--bg-base);">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:100px;height:60px;border-radius:var(--r-md);background:var(--bg-surface);box-shadow:var(--shadow-xs)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--shadow-xs</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Topbar</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:100px;height:60px;border-radius:var(--r-md);background:var(--bg-surface);box-shadow:var(--shadow-sm)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--shadow-sm</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Cards</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:100px;height:60px;border-radius:var(--r-md);background:var(--bg-surface);box-shadow:var(--shadow-md)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--shadow-md</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Dropdowns</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:100px;height:60px;border-radius:var(--r-md);background:var(--bg-surface);box-shadow:var(--shadow-lg)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--shadow-lg</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Drawers</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:100px;height:60px;border-radius:var(--r-md);background:var(--bg-surface);box-shadow:var(--shadow-xl)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--shadow-xl</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Modals</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-2)">
+          <div style="width:100px;height:60px;border-radius:var(--r-md);background:var(--bg-surface);box-shadow:var(--shadow-focus)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--shadow-focus</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Focus ring</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- MOTION                                               -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="motion">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">06 — Foundations</span>
+          <h2 class="ds-section__title">Motion</h2>
+          <p class="ds-section__desc">Hover the dots to preview easing and duration.</p>
+        </div>
+      </div>
+      <div class="ds-motion-demo">
+        <div class="ds-motion-demo__item">
+          <div class="ds-motion-demo__dot" style="transition-duration:var(--dur-fast)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--dur-fast · 120ms</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Hover, press</span>
+        </div>
+        <div class="ds-motion-demo__item">
+          <div class="ds-motion-demo__dot" style="transition-duration:var(--dur-base)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--dur-base · 180ms</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Toggle, panel</span>
+        </div>
+        <div class="ds-motion-demo__item">
+          <div class="ds-motion-demo__dot" style="transition-duration:var(--dur-slow)"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-accent)">--dur-slow · 280ms</span>
+          <span style="font-size:var(--fs-2xs);color:var(--text-tertiary)">Drawer, page</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- ICONS                                                -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="icons">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">07 — Foundations</span>
+          <h2 class="ds-section__title">Icons</h2>
+          <p class="ds-section__desc">Lucide Icons · stroke-width 1.5 · currentColor · default 20 px.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--sp-4)">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="trash-2" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">trash-2</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="truck" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">truck</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="recycle" style="width:24px;height:24px;color:var(--text-lime)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">recycle</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="leaf" style="width:24px;height:24px;color:var(--text-accent)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">leaf</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="package-x" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">package-x</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="calendar-clock" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">calendar-clock</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="credit-card" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">credit-card</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="bar-chart-2" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">bar-chart-2</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="map-pin" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">map-pin</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="alert-triangle" style="width:24px;height:24px;color:var(--status-warning)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">alert-triangle</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="check-circle-2" style="width:24px;height:24px;color:var(--status-success)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">check-circle-2</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="settings-2" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">settings-2</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="bell" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">bell</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="users" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">users</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--sp-1)">
+          <i data-lucide="download" style="width:24px;height:24px;color:var(--text-secondary)"></i>
+          <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">download</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- BUTTONS                                              -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="buttons">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">08 — Components</span>
+          <h2 class="ds-section__title">Button</h2>
+          <p class="ds-section__desc">One primary per surface. Disabled = 0.45 opacity.</p>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__head"><span class="ds-panel__name">Variants</span></div>
+        <div class="ds-panel__body ds-row">
+          <button class="btn btn--primary"><i data-lucide="leaf" style="width:16px;height:16px"></i> Schedule Collection</button>
+          <button class="btn btn--secondary">View Routes</button>
+          <button class="btn btn--ghost">Cancel</button>
+          <button class="btn btn--danger"><i data-lucide="trash-2" style="width:16px;height:16px"></i> Remove Zone</button>
+          <button class="btn btn--lime"><i data-lucide="recycle" style="width:16px;height:16px"></i> Recycling</button>
+          <button class="btn btn--primary" disabled>Disabled</button>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__head"><span class="ds-panel__name">Sizes</span></div>
+        <div class="ds-panel__body ds-row" style="align-items:flex-end">
+          <button class="btn btn--primary btn--sm">Small</button>
+          <button class="btn btn--primary">Medium (default)</button>
+          <button class="btn btn--primary btn--lg">Large</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- INPUTS                                               -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="inputs">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">09 — Components</span>
+          <h2 class="ds-section__title">Input</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body form-grid">
+          <div class="input-group">
+            <label for="i1">Customer name</label>
+            <input class="input" id="i1" type="text" placeholder="Enter full name" />
+          </div>
+          <div class="input-group">
+            <label for="i2">Zone code</label>
+            <input class="input" id="i2" type="text" placeholder="e.g. KGL-05" style="font-family:var(--font-mono)" />
+            <span class="input-hint">Used in route planning and billing</span>
+          </div>
+          <div class="input-group">
+            <label for="i3">Collection date</label>
+            <input class="input" id="i3" type="date" />
+          </div>
+          <div class="input-group">
+            <label for="i4">Fee amount (error state)</label>
+            <input class="input input--error" id="i4" type="text" value="abc" />
+            <span class="input-hint input-hint--error">Enter a valid amount in RWF</span>
+          </div>
+          <div class="input-group" style="grid-column:1/-1">
+            <label for="i5">Collection notes</label>
+            <textarea class="input" id="i5" placeholder="Special instructions, access codes, etc."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- CONTROLS                                             -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="controls">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">10 — Components</span>
+          <h2 class="ds-section__title">Checkbox &amp; Toggle</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body ds-row">
+          <label class="checkbox">
+            <input type="checkbox" checked />
+            <span class="checkbox__box"></span>
+            <span class="checkbox__label">Enable route notifications</span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" />
+            <span class="checkbox__box"></span>
+            <span class="checkbox__label">Include recycling pickup</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" id="t1" checked />
+            <div class="toggle__track"><div class="toggle__knob"></div></div>
+            <span class="toggle__label">Auto-assign driver</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- BADGES                                               -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="badges">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">11 — Components</span>
+          <h2 class="ds-section__title">Badge</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body ds-row">
+          <span class="badge badge--neutral">neutral</span>
+          <span class="badge badge--success"><i data-lucide="check-circle-2" style="width:10px;height:10px"></i>collected</span>
+          <span class="badge badge--warning"><i data-lucide="alert-triangle" style="width:10px;height:10px"></i>delayed</span>
+          <span class="badge badge--danger">overdue</span>
+          <span class="badge badge--info">info</span>
+          <span class="badge badge--accent">zone A</span>
+          <span class="badge badge--lime"><i data-lucide="recycle" style="width:10px;height:10px"></i>recycling</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- SERVICE PILLS                                        -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="pills">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">12 — Components</span>
+          <h2 class="ds-section__title">Service Pill</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body ds-row">
+          <span class="service-pill service-pill--collection"><span class="service-pill__dot"></span>collection</span>
+          <span class="service-pill service-pill--recycling"><span class="service-pill__dot"></span>recycling</span>
+          <span class="service-pill service-pill--disposal"><span class="service-pill__dot"></span>disposal</span>
+          <span class="service-pill service-pill--transport"><span class="service-pill__dot"></span>transport</span>
+          <span class="service-pill service-pill--consulting"><span class="service-pill__dot"></span>consulting</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- AVATARS                                              -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="avatars">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">13 — Components</span>
+          <h2 class="ds-section__title">Avatar</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body ds-row" style="align-items:flex-end">
+          <div class="avatar avatar--24 avatar--accent">B</div>
+          <div class="avatar avatar--32 avatar--accent">BJ</div>
+          <div class="avatar avatar--40 avatar--accent">BJ</div>
+          <div class="avatar avatar--48 avatar--accent">BJ</div>
+          <div style="width:var(--sp-5)"></div>
+          <div class="avatar avatar--40 avatar--lime">RC</div>
+          <div class="avatar avatar--40 avatar--neutral">DR</div>
+          <div class="avatar avatar--40 avatar--danger" title="Alert"><i data-lucide="alert-triangle" style="width:16px;height:16px"></i></div>
+          <div style="width:var(--sp-5)"></div>
+          <!-- Stack -->
+          <div style="display:flex">
+            <div class="avatar avatar--40 avatar--accent" style="z-index:3">K1</div>
+            <div class="avatar avatar--40 avatar--lime" style="z-index:2;margin-left:-8px">K2</div>
+            <div class="avatar avatar--40 avatar--neutral" style="z-index:1;margin-left:-8px">K3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- FILTER CHIPS                                         -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="chips">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">14 — Components</span>
+          <h2 class="ds-section__title">Filter Chip</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body ds-row">
+          <button class="filter-chip is-active"><i data-lucide="check" style="width:12px;height:12px"></i>All zones</button>
+          <button class="filter-chip">Gasabo</button>
+          <button class="filter-chip">Kicukiro</button>
+          <button class="filter-chip">Nyarugenge</button>
+          <button class="filter-chip"><i data-lucide="recycle" style="width:12px;height:12px"></i>Recycling only</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- DATA TABLE                                           -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="table">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">15 — Components</span>
+          <h2 class="ds-section__title">Data Table</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__head">
+          <span class="ds-panel__name">Waste Collection Records</span>
+          <div class="ds-row">
+            <button class="filter-chip is-active">All</button>
+            <button class="filter-chip">Pending</button>
+            <button class="filter-chip">Overdue</button>
+            <button class="btn btn--primary btn--sm"><i data-lucide="plus" style="width:14px;height:14px"></i>Add record</button>
+          </div>
+        </div>
+        <div class="ds-panel__body" style="padding:0;overflow:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Zone</th>
+                <th>Service</th>
+                <th>Fee (RWF)</th>
+                <th>Last collection</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:var(--sp-2)"><div class="avatar avatar--32 avatar--accent">MK</div><div><div style="font-weight:var(--fw-medium)">Mutesi K.</div><div style="font-size:var(--fs-xs);color:var(--text-tertiary)">Gasabo District</div></div></div></td>
+                <td><span class="data-table__mono">KGL-GAS-04</span></td>
+                <td><span class="service-pill service-pill--collection"><span class="service-pill__dot"></span>collection</span></td>
+                <td><span class="data-table__mono">3,500</span></td>
+                <td><span style="font-size:var(--fs-xs);color:var(--text-secondary)">2 days ago</span></td>
+                <td><span class="badge badge--success">paid</span></td>
+                <td><button class="btn btn--ghost btn--sm">View</button></td>
+              </tr>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:var(--sp-2)"><div class="avatar avatar--32 avatar--lime">JN</div><div><div style="font-weight:var(--fw-medium)">Nkurunziza J.</div><div style="font-size:var(--fs-xs);color:var(--text-tertiary)">Kicukiro District</div></div></div></td>
+                <td><span class="data-table__mono">KGL-KIC-11</span></td>
+                <td><span class="service-pill service-pill--recycling"><span class="service-pill__dot"></span>recycling</span></td>
+                <td><span class="data-table__mono">2,000</span></td>
+                <td><span style="font-size:var(--fs-xs);color:var(--text-secondary)">5 days ago</span></td>
+                <td><span class="badge badge--warning">pending</span></td>
+                <td><button class="btn btn--ghost btn--sm">View</button></td>
+              </tr>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:var(--sp-2)"><div class="avatar avatar--32 avatar--neutral">RH</div><div><div style="font-weight:var(--fw-medium)">Habimana R.</div><div style="font-size:var(--fs-xs);color:var(--text-tertiary)">Nyarugenge District</div></div></div></td>
+                <td><span class="data-table__mono">KGL-NYA-07</span></td>
+                <td><span class="service-pill service-pill--disposal"><span class="service-pill__dot"></span>disposal</span></td>
+                <td><span class="data-table__mono">5,000</span></td>
+                <td><span style="font-size:var(--fs-xs);color:var(--text-secondary)">14 days ago</span></td>
+                <td><span class="badge badge--danger">overdue</span></td>
+                <td><button class="btn btn--ghost btn--sm">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ds-panel__body" style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-3) var(--sp-4);">
+          <span style="font-size:var(--fs-xs);color:var(--text-tertiary)">3 of 248 records</span>
+          <div class="ds-row">
+            <button class="btn btn--secondary btn--sm">Previous</button>
+            <button class="btn btn--secondary btn--sm">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- CARDS                                                -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="cards">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">16 — Components</span>
+          <h2 class="ds-section__title">Cards</h2>
+        </div>
+      </div>
+      <!-- Stat cards -->
+      <div class="ds-grid ds-grid--4" style="margin-bottom:var(--sp-5)">
+        <div class="stat-card">
+          <div class="stat-card__label">Total zones</div>
+          <div class="stat-card__value">48</div>
+          <div class="stat-card__sub"><i data-lucide="map-pin" style="width:12px;height:12px;color:var(--text-accent)"></i>Kigali metro area</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Collections today</div>
+          <div class="stat-card__value">127</div>
+          <div class="stat-card__sub" style="color:var(--status-success)"><i data-lucide="trending-up" style="width:12px;height:12px"></i>+12% vs yesterday</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Recycled this month</div>
+          <div class="stat-card__value" style="color:var(--text-lime)">4.2t</div>
+          <div class="stat-card__sub"><i data-lucide="recycle" style="width:12px;height:12px;color:var(--text-lime)"></i>Tonnes of material</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Overdue fees</div>
+          <div class="stat-card__value" style="color:var(--status-danger)">23</div>
+          <div class="stat-card__sub" style="color:var(--status-danger)"><i data-lucide="alert-triangle" style="width:12px;height:12px"></i>Requires follow-up</div>
+        </div>
+      </div>
+      <!-- Generic card -->
+      <div class="card" style="max-width:400px">
+        <div class="card__head">
+          <span class="card__title">Zone KGL-GAS-04</span>
+          <span class="badge badge--success">active</span>
+        </div>
+        <div class="card__body">
+          <p style="font-size:var(--fs-sm);color:var(--text-secondary);margin-bottom:var(--sp-3)">Gasabo District, Northern sector. Weekly collection schedule active.</p>
+          <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap">
+            <span class="service-pill service-pill--collection"><span class="service-pill__dot"></span>collection</span>
+            <span class="service-pill service-pill--recycling"><span class="service-pill__dot"></span>recycling</span>
+          </div>
+        </div>
+        <div class="card__foot">
+          <button class="btn btn--ghost btn--sm">Details</button>
+          <button class="btn btn--primary btn--sm">Manage zone</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- SIDEBAR NAV                                          -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="sidebar-nav">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">17 — Components</span>
+          <h2 class="ds-section__title">Sidebar Navigation</h2>
+        </div>
+      </div>
+      <div class="sidebar-spec">
+        <div class="sidebar-spec__logo">
+          <div class="ds-logo__mark" style="width:32px;height:32px;border-radius:var(--r-sm);background:linear-gradient(135deg,var(--accent-700),var(--lime-500));display:grid;place-items:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:var(--fw-bold);color:var(--n-0)">BAJ</div>
+          <span style="font-size:var(--fs-md);font-weight:var(--fw-semibold);color:var(--text-primary)">BAJ Ltd</span>
+        </div>
+        <div class="sidebar-spec__section-label">Main</div>
+        <div class="sidebar-spec__link is-active"><i data-lucide="layout-dashboard" style="width:16px;height:16px"></i>Dashboard</div>
+        <div class="sidebar-spec__link"><i data-lucide="map-pin" style="width:16px;height:16px"></i>Zones</div>
+        <div class="sidebar-spec__link"><i data-lucide="truck" style="width:16px;height:16px"></i>Routes &amp; Vehicles</div>
+        <div class="sidebar-spec__link"><i data-lucide="calendar-clock" style="width:16px;height:16px"></i>Schedule</div>
+        <div class="sidebar-spec__section-label" style="margin-top:var(--sp-3)">Financials</div>
+        <div class="sidebar-spec__link"><i data-lucide="credit-card" style="width:16px;height:16px"></i>Fee Management</div>
+        <div class="sidebar-spec__link"><i data-lucide="bar-chart-2" style="width:16px;height:16px"></i>Reports</div>
+        <div class="sidebar-spec__section-label" style="margin-top:var(--sp-3)">Environment</div>
+        <div class="sidebar-spec__link"><i data-lucide="recycle" style="width:16px;height:16px"></i>Recycling</div>
+        <div class="sidebar-spec__link"><i data-lucide="leaf" style="width:16px;height:16px"></i>Impact</div>
+        <div class="sidebar-spec__section-label" style="margin-top:var(--sp-3)">System</div>
+        <div class="sidebar-spec__link"><i data-lucide="settings-2" style="width:16px;height:16px"></i>Settings</div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- TABS                                                 -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="tabs">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">18 — Components</span>
+          <h2 class="ds-section__title">Tabs</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body" style="padding-bottom:0">
+          <div class="tabs">
+            <button class="tab is-active">Overview</button>
+            <button class="tab">Collections <span class="badge badge--neutral" style="font-size:10px;padding:1px 6px;margin-left:4px">127</span></button>
+            <button class="tab">Recycling <span class="badge badge--lime" style="font-size:10px;padding:1px 6px;margin-left:4px">34</span></button>
+            <button class="tab">Fees</button>
+            <button class="tab">Reports</button>
+          </div>
+        </div>
+        <div class="ds-panel__body">
+          <p style="font-size:var(--fs-sm);color:var(--text-secondary)">Tab content renders here. Active tab shows accent underline — no fill, no background on the tab item itself.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- MODAL                                                -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="modal">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">19 — Components</span>
+          <h2 class="ds-section__title">Modal</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body" style="background:var(--n-100);display:flex;justify-content:center;padding:var(--sp-8) var(--sp-5)">
+          <div class="modal-spec">
+            <div class="modal-spec__head">
+              <span class="modal-spec__title">Schedule collection</span>
+              <button class="btn btn--ghost btn--sm" style="padding:0;width:28px;height:28px;justify-content:center"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+            </div>
+            <div class="modal-spec__body">
+              <div class="form-grid">
+                <div class="input-group"><label>Zone</label><input class="input" placeholder="KGL-GAS-04" style="font-family:var(--font-mono)" /></div>
+                <div class="input-group"><label>Date</label><input class="input" type="date" /></div>
+                <div class="input-group" style="grid-column:1/-1"><label>Notes</label><textarea class="input" placeholder="Special instructions..."></textarea></div>
+              </div>
+            </div>
+            <div class="modal-spec__foot">
+              <button class="btn btn--ghost">Cancel</button>
+              <button class="btn btn--primary"><i data-lucide="calendar-clock" style="width:16px;height:16px"></i>Confirm schedule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- TOAST                                                -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="toast">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">20 — Components</span>
+          <h2 class="ds-section__title">Toast</h2>
+          <p class="ds-section__desc">Auto-dismiss 5 s (success/info). Persistent until dismissed (warning/danger).</p>
+        </div>
+      </div>
+      <div class="ds-col">
+        <div class="toast toast--success">
+          <div class="toast__icon"><i data-lucide="check-circle-2" style="width:18px;height:18px"></i></div>
+          <div class="toast__body">
+            <div class="toast__title">Collection confirmed</div>
+            <div class="toast__desc">Zone KGL-GAS-04 scheduled for Jun 3, 2026.</div>
+          </div>
+        </div>
+        <div class="toast toast--warning">
+          <div class="toast__icon"><i data-lucide="alert-triangle" style="width:18px;height:18px"></i></div>
+          <div class="toast__body">
+            <div class="toast__title">Route delayed</div>
+            <div class="toast__desc">Vehicle #12 is running 45 min behind schedule.</div>
+          </div>
+        </div>
+        <div class="toast toast--danger">
+          <div class="toast__icon"><i data-lucide="x-circle" style="width:18px;height:18px"></i></div>
+          <div class="toast__body">
+            <div class="toast__title">Overdue fees detected</div>
+            <div class="toast__desc">23 customers in Nyarugenge have unpaid balances.</div>
+          </div>
+        </div>
+        <div class="toast toast--info">
+          <div class="toast__icon"><i data-lucide="info" style="width:18px;height:18px"></i></div>
+          <div class="toast__body">
+            <div class="toast__title">Sensitization campaign starting</div>
+            <div class="toast__desc">Annual environmental awareness drive begins Jun 10.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- EMPTY STATE                                          -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="empty">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">21 — Components</span>
+          <h2 class="ds-section__title">Empty State</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body">
+          <div class="empty-state">
+            <div class="empty-state__icon"><i data-lucide="recycle" style="width:40px;height:40px"></i></div>
+            <div class="empty-state__title">No recycling records yet</div>
+            <p class="empty-state__desc">Start tracking recycled materials by logging the first collection from this zone.</p>
+            <button class="btn btn--lime"><i data-lucide="plus" style="width:16px;height:16px"></i>Log recycling record</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- LOADING                                              -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="loading">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">22 — Components</span>
+          <h2 class="ds-section__title">Loading States</h2>
+        </div>
+      </div>
+      <div class="ds-panel">
+        <div class="ds-panel__body ds-col">
+          <div class="ds-row" style="align-items:center">
+            <div class="spinner"></div>
+            <span style="font-size:var(--fs-sm);color:var(--text-secondary)">Spinner · 16 px · inline</span>
+            <div class="spinner spinner--lg"></div>
+            <span style="font-size:var(--fs-sm);color:var(--text-secondary)">Spinner · 32 px · page</span>
+          </div>
+          <div>
+            <div style="font-size:var(--fs-xs);color:var(--text-tertiary);margin-bottom:var(--sp-2)">Skeleton rows</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-2)">
+              <div class="skeleton" style="height:14px;width:220px"></div>
+              <div class="skeleton" style="height:14px;width:340px"></div>
+              <div class="skeleton" style="height:14px;width:180px"></div>
+              <div style="display:flex;gap:var(--sp-2);margin-top:var(--sp-1)">
+                <div class="skeleton" style="height:32px;width:100px;border-radius:var(--r-md)"></div>
+                <div class="skeleton" style="height:32px;width:100px;border-radius:var(--r-md)"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════ -->
+    <!-- FEE CARD (BAJ-specific)                              -->
+    <!-- ════════════════════════════════════════════════════ -->
+    <section class="ds-section" id="fee-card">
+      <div class="ds-section__head">
+        <div>
+          <span class="ds-section__tag">23 — BAJ-specific</span>
+          <h2 class="ds-section__title">Fee Card</h2>
+          <p class="ds-section__desc">Displays collection fee status per customer. Used in the Waste Collection Fee Management System.</p>
+        </div>
+      </div>
+      <div class="ds-col" style="max-width:440px">
+        <div class="fee-card">
+          <div class="avatar avatar--40 avatar--accent">MK</div>
+          <div class="fee-card__info">
+            <div class="fee-card__name">Mutesi K.</div>
+            <div class="fee-card__address">Gasabo District · Zone KGL-GAS-04</div>
+          </div>
+          <div style="text-align:right">
+            <div class="fee-card__amount">RWF 3,500</div>
+            <span class="badge badge--success" style="margin-top:4px">paid</span>
+          </div>
+          <button class="btn btn--ghost btn--sm"><i data-lucide="eye" style="width:14px;height:14px"></i></button>
+        </div>
+        <div class="fee-card">
+          <div class="avatar avatar--40 avatar--lime">JN</div>
+          <div class="fee-card__info">
+            <div class="fee-card__name">Nkurunziza J.</div>
+            <div class="fee-card__address">Kicukiro District · Zone KGL-KIC-11</div>
+          </div>
+          <div style="text-align:right">
+            <div class="fee-card__amount">RWF 2,000</div>
+            <span class="badge badge--warning" style="margin-top:4px">pending</span>
+          </div>
+          <button class="btn btn--primary btn--sm">Pay</button>
+        </div>
+        <div class="fee-card" style="border-color:var(--status-danger-soft)">
+          <div class="avatar avatar--40 avatar--danger"><i data-lucide="alert-triangle" style="width:16px;height:16px"></i></div>
+          <div class="fee-card__info">
+            <div class="fee-card__name">Habimana R.</div>
+            <div class="fee-card__address">Nyarugenge · Zone KGL-NYA-07</div>
+          </div>
+          <div style="text-align:right">
+            <div class="fee-card__amount" style="color:var(--status-danger)">RWF 5,000</div>
+            <span class="badge badge--danger" style="margin-top:4px">overdue</span>
+          </div>
+          <button class="btn btn--danger btn--sm">Follow up</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="margin-top:var(--sp-12);padding-top:var(--sp-6);border-top:1px solid var(--border-subtle);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3)">
+      <div style="display:flex;align-items:center;gap:var(--sp-2)">
+        <div style="width:24px;height:24px;border-radius:var(--r-xs);background:linear-gradient(135deg,var(--accent-700),var(--lime-500));display:grid;place-items:center;font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--n-0)">B</div>
+        <span style="font-size:var(--fs-sm);font-weight:var(--fw-semibold);color:var(--text-primary)">BAJ Ltd Design System</span>
+      </div>
+      <span style="font-size:var(--fs-xs);color:var(--text-tertiary)">© 2026 BAJ Ltd · Rwanda-Kigali-Gasabo · baj.rw</span>
+      <span style="font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--text-tertiary)">v1.0 · Jun 2026</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Theme toggle
+  function toggleTheme(btn) {
+    const html = document.documentElement;
+    const isDark = html.dataset.theme === 'dark';
+    html.dataset.theme = isDark ? 'light' : 'dark';
+    btn.textContent = isDark ? '◑ Dark' : '☀ Light';
+  }
+
+  // Sidebar active link
+  document.querySelectorAll('.ds-sidebar__link').forEach(link => {
+    link.addEventListener('click', function() {
+      document.querySelectorAll('.ds-sidebar__link').forEach(l => l.classList.remove('is-active'));
+      this.classList.add('is-active');
+    });
+  });
+
+  // Toggle specimen — handled entirely by CSS :checked ~ .toggle__track
+
+  // Init Lucide icons
+  lucide.createIcons();
+</script>
+</body>
+</html>

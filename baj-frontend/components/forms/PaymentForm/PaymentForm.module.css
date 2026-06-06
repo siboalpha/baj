@@ -1,0 +1,161 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+/* ── Amount summary ───────────────────────────────────────── */
+.summary {
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.summaryLabel {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-tertiary);
+}
+
+.summaryAmount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.summaryPeriod {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+
+/* ── Method selector ──────────────────────────────────────── */
+.methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+
+.methodBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-2);
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.methodBtn:hover {
+  border-color: var(--accent-400);
+  background: var(--bg-hover);
+}
+
+.methodBtn[data-active='true'] {
+  border-color: var(--accent-600);
+  background: var(--bg-accent-soft);
+}
+
+.methodIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.03em;
+  color: var(--n-0);
+}
+
+.methodIcon[data-method='mtn'] {
+  background: #FFCC00;
+  color: #000;
+}
+
+.methodIcon[data-method='airtel'] {
+  background: #E4002B;
+}
+
+.methodIcon[data-method='card'] {
+  background: linear-gradient(135deg, var(--accent-700), var(--lime-600));
+}
+
+.methodIcon[data-method='mtn']::after    { content: 'MTN'; }
+.methodIcon[data-method='airtel']::after { content: 'Air'; }
+.methodIcon[data-method='card']::after   { content: '💳'; font-size: 14px; }
+
+.methodLabel {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--text-secondary);
+}
+
+.methodBtn[data-active='true'] .methodLabel {
+  color: var(--text-accent);
+  font-weight: var(--fw-semibold);
+}
+
+/* ── Fields ───────────────────────────────────────────────── */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+/* ── Success state ────────────────────────────────────────── */
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-8) var(--sp-4);
+  text-align: center;
+}
+
+.successIcon {
+  color: var(--status-success);
+  animation: pop var(--dur-normal) var(--ease-out);
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.successTitle {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.successSub {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}

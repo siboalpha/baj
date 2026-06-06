@@ -1,0 +1,81 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  border: none;
+  border-radius: var(--r-md);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    box-shadow  var(--dur-fast) var(--ease-out),
+    opacity     var(--dur-fast) var(--ease-out);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Sizes ───────────────────────────────────────────────── */
+.btn[data-size="sm"] { height: 28px; padding: 0 var(--sp-3); font-size: var(--fs-sm); }
+.btn[data-size="md"] { height: 36px; padding: 0 var(--sp-4); font-size: var(--fs-md); }
+.btn[data-size="lg"] { height: 44px; padding: 0 var(--sp-5); font-size: var(--fs-lg); }
+
+/* ── Variants ────────────────────────────────────────────── */
+.btn[data-variant="primary"] {
+  background: var(--bg-accent);
+  color: var(--text-on-accent);
+}
+.btn[data-variant="primary"]:hover:not(:disabled) { background: var(--accent-800); }
+.btn[data-variant="primary"]:active:not(:disabled) { background: var(--accent-900); }
+
+.btn[data-variant="secondary"] {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+.btn[data-variant="secondary"]:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.btn[data-variant="ghost"] {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.btn[data-variant="ghost"]:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.btn[data-variant="danger"] {
+  background: var(--status-danger);
+  color: var(--n-0);
+}
+.btn[data-variant="danger"]:hover:not(:disabled) { filter: brightness(0.9); }
+
+.btn[data-variant="lime"] {
+  background: var(--lime-500);
+  color: var(--n-0);
+}
+.btn[data-variant="lime"]:hover:not(:disabled) { background: var(--lime-600); }
+
+/* ── Icon wrapper ────────────────────────────────────────── */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.labelLoading {
+  opacity: 0.8;
+}

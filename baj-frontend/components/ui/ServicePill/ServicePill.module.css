@@ -1,0 +1,27 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-full);
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  flex-shrink: 0;
+}
+
+/* ── Dot colors per service type ─────────────────────────── */
+.pill[data-type="collection"]  .dot { background: var(--accent-700); }
+.pill[data-type="recycling"]   .dot { background: var(--lime-500); }
+.pill[data-type="disposal"]    .dot { background: var(--status-danger); }
+.pill[data-type="transport"]   .dot { background: var(--status-info); }
+.pill[data-type="consulting"]  .dot { background: var(--status-warning); }

@@ -1,0 +1,250 @@
+.main {
+  background: var(--bg-base);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.hero {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--sp-12) 0 var(--sp-10);
+}
+
+.title {
+  font-size: var(--fs-5xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-normal);
+  color: var(--text-secondary);
+  max-width: 600px;
+}
+
+.section {
+  padding: var(--sp-12) 0;
+}
+
+.altSection {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--sp-12) 0;
+}
+
+.sectionTitle {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--sp-6);
+}
+
+.subTitle {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--sp-4);
+}
+
+.bodyText {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-normal);
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin-bottom: var(--sp-4);
+}
+
+.story {
+  margin-bottom: var(--sp-10);
+}
+
+.visionBlock {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-10);
+  max-width: 720px;
+}
+
+.visionQuote {
+  font-size: var(--fs-xl);
+  font-style: italic;
+  line-height: var(--lh-normal);
+  color: var(--text-primary);
+  margin: 0 0 var(--sp-3);
+}
+
+.visionLabel {
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+}
+
+.mission {
+  max-width: 720px;
+}
+
+.missionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  counter-reset: mission;
+}
+
+.missionList li {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+  padding-left: var(--sp-7);
+  position: relative;
+}
+
+.missionList li::before {
+  counter-increment: mission;
+  content: counter(mission) '.';
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-weight: var(--fw-semibold);
+  color: var(--text-accent);
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-4);
+}
+
+.valueCard {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.valueTitle {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.valueDesc {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-8);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.list li {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  position: relative;
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--accent-500);
+}
+
+.careersList {
+  list-style: none;
+  margin: var(--sp-4) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-2);
+}
+
+.careersList li {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  position: relative;
+}
+
+.careersList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--accent-500);
+}
+
+@media (max-width: 1024px) {
+  .valuesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: var(--sp-10) 0 var(--sp-8);
+  }
+
+  .title {
+    font-size: var(--fs-4xl);
+  }
+
+  .lead {
+    font-size: var(--fs-lg);
+  }
+
+  .section,
+  .altSection {
+    padding: var(--sp-10) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--fs-2xl);
+  }
+
+  .careersList {
+    grid-template-columns: 1fr;
+  }
+}

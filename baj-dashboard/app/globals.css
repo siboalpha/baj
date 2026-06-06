@@ -1,0 +1,286 @@
+/* ============================================================
+   BAJ Ltd — Global Styles
+   All design tokens live here as CSS custom properties.
+   Components use these via var(--token-name) in .module.css files.
+   Dark mode: toggle data-theme="dark" on <html>.
+   ============================================================ */
+
+/* ============================================================
+   PRIMITIVE TOKENS
+   ============================================================ */
+
+:root {
+
+  /* ── Accent Green Scale (OKLCH · hue 145) ──────────────── */
+  --accent-50:   oklch(97% 0.020 145);
+  --accent-100:  oklch(93% 0.040 145);
+  --accent-200:  oklch(87% 0.062 145);
+  --accent-300:  oklch(78% 0.100 145);
+  --accent-400:  oklch(68% 0.130 145);
+  --accent-500:  oklch(59% 0.130 145);
+  --accent-600:  oklch(52% 0.140 145);
+  --accent-700:  oklch(46% 0.160 145);
+  --accent-800:  oklch(36% 0.130 145);
+  --accent-900:  oklch(25% 0.090 145);
+
+  /* ── Lime Scale (OKLCH · hue 120) ──────────────────────── */
+  --lime-50:   oklch(97% 0.025 120);
+  --lime-100:  oklch(92% 0.060 120);
+  --lime-200:  oklch(85% 0.110 120);
+  --lime-300:  oklch(78% 0.165 120);
+  --lime-400:  oklch(72% 0.200 120);
+  --lime-500:  oklch(68% 0.220 120);
+  --lime-600:  oklch(58% 0.190 120);
+  --lime-700:  oklch(48% 0.160 120);
+  --lime-800:  oklch(37% 0.120 120);
+  --lime-900:  oklch(26% 0.080 120);
+
+  /* ── Neutral Scale (hue 145 · 16 steps) ────────────────── */
+  --n-0:    oklch(100% 0.000 145);
+  --n-25:   oklch(98%  0.003 145);
+  --n-50:   oklch(96%  0.005 145);
+  --n-100:  oklch(93%  0.007 145);
+  --n-150:  oklch(89%  0.008 145);
+  --n-200:  oklch(84%  0.009 145);
+  --n-300:  oklch(74%  0.010 145);
+  --n-400:  oklch(62%  0.010 145);
+  --n-500:  oklch(52%  0.010 145);
+  --n-600:  oklch(42%  0.009 145);
+  --n-700:  oklch(33%  0.008 145);
+  --n-800:  oklch(24%  0.007 145);
+  --n-850:  oklch(19%  0.006 145);
+  --n-900:  oklch(14%  0.005 145);
+  --n-950:  oklch(10%  0.004 145);
+  --n-1000: oklch(6%   0.003 145);
+
+  /* ── Status Colors ──────────────────────────────────────── */
+  --status-success:       oklch(60% 0.145 145);
+  --status-success-soft:  oklch(93% 0.045 145);
+  --status-warning:       oklch(72% 0.155 75);
+  --status-warning-soft:  oklch(95% 0.055 75);
+  --status-danger:        oklch(60% 0.200 25);
+  --status-danger-soft:   oklch(95% 0.055 25);
+  --status-info:          oklch(62% 0.145 240);
+  --status-info-soft:     oklch(94% 0.045 240);
+
+  /* ============================================================
+     SEMANTIC TOKENS — Light Mode
+     Always use these in components, never raw scale tokens.
+     ============================================================ */
+
+  /* ── Backgrounds ────────────────────────────────────────── */
+  --bg-base:        var(--n-25);
+  --bg-surface:     var(--n-0);
+  --bg-sunken:      var(--n-50);
+  --bg-elevated:    var(--n-0);
+  --bg-hover:       var(--n-100);
+  --bg-active:      var(--n-150);
+  --bg-accent:      var(--accent-700);
+  --bg-accent-soft: var(--accent-50);
+  --bg-lime-soft:   var(--lime-50);
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --border-subtle:  var(--n-150);
+  --border-default: var(--n-200);
+  --border-strong:  var(--n-300);
+  --border-focus:   var(--accent-600);
+  --border-accent:  var(--accent-500);
+
+  /* ── Text ───────────────────────────────────────────────── */
+  --text-primary:    var(--n-900);
+  --text-secondary:  var(--n-600);
+  --text-tertiary:   var(--n-500);
+  --text-disabled:   var(--n-400);
+  --text-inverse:    var(--n-0);
+  --text-accent:     var(--accent-700);
+  --text-lime:       var(--lime-700);
+  --text-on-accent:  var(--n-0);
+
+  /* ── Shadows ────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 0 0 oklch(15% 0.008 145 / 0.04);
+  --shadow-sm: 0 1px 2px 0 oklch(15% 0.008 145 / 0.06),
+               0 0 0 1px oklch(15% 0.008 145 / 0.04);
+  --shadow-md: 0 4px 8px -2px oklch(15% 0.008 145 / 0.10),
+               0 2px 4px -2px oklch(15% 0.008 145 / 0.06);
+  --shadow-lg: 0 12px 24px -8px oklch(15% 0.008 145 / 0.14),
+               0 4px 8px -4px oklch(15% 0.008 145 / 0.08);
+  --shadow-xl: 0 24px 48px -12px oklch(15% 0.008 145 / 0.18),
+               0 8px 16px -8px oklch(15% 0.008 145 / 0.10);
+  --shadow-focus: 0 0 0 3px oklch(59% 0.130 145 / 0.28);
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --fs-2xs: 11px;
+  --fs-xs:  12px;
+  --fs-sm:  13px;
+  --fs-md:  14px;
+  --fs-lg:  16px;
+  --fs-xl:  18px;
+  --fs-2xl: 22px;
+  --fs-3xl: 28px;
+  --fs-4xl: 36px;
+  --fs-5xl: 48px;
+  --fs-6xl: 64px;
+
+  --lh-tight:  1.15;
+  --lh-snug:   1.30;
+  --lh-normal: 1.50;
+  --lh-loose:  1.70;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+
+  /* ── Spacing (4 px grid) ────────────────────────────────── */
+  --sp-0:  0px;
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-7:  32px;
+  --sp-8:  40px;
+  --sp-9:  48px;
+  --sp-10: 64px;
+  --sp-11: 80px;
+  --sp-12: 96px;
+
+  /* ── Border Radii ───────────────────────────────────────── */
+  --r-xs:   4px;
+  --r-sm:   6px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-xl:   16px;
+  --r-2xl:  24px;
+  --r-full: 999px;
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --dur-fast:    120ms;
+  --dur-normal:  180ms;
+  --dur-slow:    280ms;
+
+  /* ── Z-index ────────────────────────────────────────────── */
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-toast:    500;
+
+  /* ── Sidebar width (staff dashboard layout) ─────────────── */
+  --sidebar-width: 240px;
+  --topbar-height: 56px;
+}
+
+/* ============================================================
+   DARK MODE — flip semantic tokens only
+   ============================================================ */
+[data-theme="dark"] {
+  --bg-base:        var(--n-1000);
+  --bg-surface:     var(--n-950);
+  --bg-sunken:      var(--n-900);
+  --bg-elevated:    var(--n-850);
+  --bg-hover:       var(--n-800);
+  --bg-active:      var(--n-700);
+  --bg-accent:      var(--accent-500);
+  --bg-accent-soft: oklch(36% 0.08 145 / 0.22);
+  --bg-lime-soft:   oklch(36% 0.10 120 / 0.18);
+
+  --border-subtle:  var(--n-850);
+  --border-default: var(--n-800);
+  --border-strong:  var(--n-700);
+  --border-focus:   var(--accent-400);
+  --border-accent:  var(--accent-400);
+
+  --text-primary:   var(--n-50);
+  --text-secondary: var(--n-300);
+  --text-tertiary:  var(--n-400);
+  --text-disabled:  var(--n-600);
+  --text-inverse:   var(--n-900);
+  --text-accent:    var(--accent-300);
+  --text-lime:      var(--lime-300);
+  --text-on-accent: var(--n-900);
+
+  --shadow-xs: 0 1px 0 0 oklch(0% 0 0 / 0.16);
+  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0 / 0.24),
+               0 0 0 1px oklch(0% 0 0 / 0.16);
+  --shadow-md: 0 4px 8px -2px oklch(0% 0 0 / 0.32),
+               0 2px 4px -2px oklch(0% 0 0 / 0.20);
+  --shadow-lg: 0 12px 24px -8px oklch(0% 0 0 / 0.40),
+               0 4px 8px -4px oklch(0% 0 0 / 0.28);
+  --shadow-xl: 0 24px 48px -12px oklch(0% 0 0 / 0.48),
+               0 8px 16px -8px oklch(0% 0 0 / 0.36);
+  --shadow-focus: 0 0 0 3px oklch(59% 0.130 145 / 0.38);
+
+  --status-success-soft: oklch(36% 0.10 145 / 0.22);
+  --status-warning-soft: oklch(36% 0.10 75  / 0.22);
+  --status-danger-soft:  oklch(36% 0.12 25  / 0.22);
+  --status-info-soft:    oklch(36% 0.08 240 / 0.22);
+}
+
+/* ============================================================
+   BASE RESET & DOCUMENT STYLES
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+a {
+  color: var(--text-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration:  0.01ms !important;
+  }
+}

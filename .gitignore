@@ -1,0 +1,14 @@
+# Claude
+.claude
+
+# Dependencies
+**/node_modules
+
+# Next.js build output
+**/.next
+
+# Env files
+**/.env*.local
+
+# OS
+.DS_Store

@@ -1,0 +1,117 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+/* ── Sent-to label ───────────────────────────────────────── */
+.sentTo {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.email {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+/* ── OTP boxes ───────────────────────────────────────────── */
+.boxes {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+}
+
+.box {
+  width: 48px;
+  height: 56px;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-semibold);
+  text-align: center;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow   var(--dur-fast) var(--ease-out),
+    background   var(--dur-fast) var(--ease-out);
+  appearance: textfield;
+}
+
+.box:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-focus);
+}
+
+.box[data-filled="true"] {
+  border-color: var(--accent-500);
+  background: var(--bg-accent-soft);
+}
+
+.box[data-error="true"] {
+  border-color: var(--status-danger);
+  background: var(--status-danger-soft);
+}
+
+.box:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Error ───────────────────────────────────────────────── */
+.error {
+  font-size: var(--fs-sm);
+  color: var(--status-danger);
+  text-align: center;
+  margin-top: calc(var(--sp-2) * -1);
+}
+
+/* ── Back link ───────────────────────────────────────────── */
+.back {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.backLink {
+  color: var(--text-accent);
+  font-weight: var(--fw-medium);
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}
+
+/* ── Dev credential hint ─────────────────────────────────── */
+.devHint {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-sunken);
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--border-subtle);
+}
+
+.devVal {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 400px) {
+  .box {
+    width: 40px;
+    height: 48px;
+    font-size: var(--fs-xl);
+    border-radius: var(--r-md);
+  }
+  .boxes {
+    gap: var(--sp-1);
+  }
+}

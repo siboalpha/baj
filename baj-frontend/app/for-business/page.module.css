@@ -1,0 +1,231 @@
+.main {
+  background: var(--bg-base);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+.hero {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--sp-12) 0 var(--sp-10);
+}
+
+.title {
+  font-size: var(--fs-5xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-normal);
+  color: var(--text-secondary);
+  max-width: 640px;
+}
+
+.section {
+  padding: var(--sp-12) 0;
+}
+
+.altSection {
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--sp-12) 0;
+}
+
+.sectionTitle {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--sp-8);
+}
+
+.bodyText {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-normal);
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin-bottom: var(--sp-8);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-4);
+}
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.cardTitle {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.cardList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.cardList li {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  position: relative;
+}
+
+.cardList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--accent-500);
+}
+
+.complianceList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-3);
+  max-width: 720px;
+}
+
+.complianceList li {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  position: relative;
+}
+
+.complianceList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--status-success);
+}
+
+.caseStudy {
+  background: var(--bg-base);
+  border: 1px solid var(--border-default);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  max-width: 720px;
+}
+
+.caseTitle {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--sp-6);
+}
+
+.caseMeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.caseMeta p {
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--text-secondary);
+}
+
+.caseMeta ul {
+  list-style: none;
+  margin: var(--sp-2) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.caseMeta ul li {
+  font-size: var(--fs-md);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  position: relative;
+}
+
+.caseMeta ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--accent-500);
+}
+
+.caseLabel {
+  display: block;
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: var(--sp-1);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .complianceList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: var(--sp-10) 0 var(--sp-8);
+  }
+
+  .title {
+    font-size: var(--fs-4xl);
+  }
+
+  .lead {
+    font-size: var(--fs-lg);
+  }
+
+  .section,
+  .altSection {
+    padding: var(--sp-10) 0;
+  }
+
+  .sectionTitle {
+    font-size: var(--fs-2xl);
+  }
+}

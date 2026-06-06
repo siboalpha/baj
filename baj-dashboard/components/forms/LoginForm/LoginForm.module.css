@@ -1,0 +1,66 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ── Password field wrapper (for eye toggle) ─────────────── */
+.passwordField {
+  position: relative;
+}
+
+.passwordField input {
+  padding-right: 40px;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: var(--sp-3);
+  bottom: 0;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.eyeBtn:hover {
+  color: var(--text-primary);
+}
+
+/* ── Error ───────────────────────────────────────────────── */
+.error {
+  font-size: var(--fs-sm);
+  color: var(--status-danger);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--status-danger-soft);
+  border-radius: var(--r-md);
+  border: 1px solid oklch(60% 0.200 25 / 0.20);
+}
+
+/* ── Hint ────────────────────────────────────────────────── */
+.hint {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+  line-height: var(--lh-snug);
+}
+
+/* ── Dev credential hint ─────────────────────────────────── */
+.devHint {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-sunken);
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--border-subtle);
+}
+
+.devVal {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
