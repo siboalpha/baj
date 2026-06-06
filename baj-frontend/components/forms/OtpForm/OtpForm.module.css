@@ -89,6 +89,22 @@
   text-decoration: underline;
 }
 
+/* ── Dev hint ────────────────────────────────────────────── */
+.devHint {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--bg-sunken);
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--border-subtle);
+}
+
+.devVal {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 360px) {
   .box {

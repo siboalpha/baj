@@ -66,7 +66,7 @@ export default function LoginForm() {
       </Button>
 
       <p className={styles.devHint}>
-        Dev: <span className={styles.devVal}>0781234567</span>
+        Dev: <span className={styles.devVal}>0788009976</span>
       </p>
     </form>
   );

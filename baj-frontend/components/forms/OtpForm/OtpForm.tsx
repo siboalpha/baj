@@ -121,6 +121,10 @@ export default function OtpForm() {
         Wrong number?{' '}
         <a href="/auth/login" className={styles.resendLink}>Go back</a>
       </p>
+
+      <p className={styles.devHint}>
+        Dev OTP: <span className={styles.devVal}>1234</span>
+      </p>
     </form>
   );
 }
