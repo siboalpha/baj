@@ -141,8 +141,7 @@ export default function Header() {
       <header className={styles.header} data-scrolled={scrolled}>
         <div className={styles.container}>
           <Link href="/" className={styles.logo}>
-            <span className={styles.logoMark}>BAJ</span>
-            <span className={styles.logoText}>Ltd</span>
+            <img src="/logo.png" alt="BAJ Ltd" className={styles.logoImg} />
           </Link>
           <button
             type="button"
@@ -165,8 +164,7 @@ export default function Header() {
     >
       <div className={styles.container}>
         <Link href="/" className={styles.logo} onClick={handleNavClick}>
-          <span className={styles.logoMark}>BAJ</span>
-          <span className={styles.logoText}>Ltd</span>
+          <img src="/logo.png" alt="BAJ Ltd" className={styles.logoImg} />
         </Link>
 
         <nav className={styles.navDesktop} aria-label="Primary">

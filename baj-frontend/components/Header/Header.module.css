@@ -42,25 +42,11 @@
   text-decoration: none;
 }
 
-.logoMark {
-  width: 36px;
+.logoImg {
   height: 36px;
-  border-radius: var(--r-md);
-  background: var(--bg-accent);
-  color: var(--text-on-accent);
-  font-family: var(--font-mono);
-  font-weight: var(--fw-bold);
-  font-size: var(--fs-xs);
-  display: grid;
-  place-items: center;
+  width: auto;
+  display: block;
   flex-shrink: 0;
-}
-
-.logoText {
-  font-size: var(--fs-lg);
-  font-weight: var(--fw-bold);
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
 }
 
 /* ── Desktop navigation ───────────────────────────────────── */

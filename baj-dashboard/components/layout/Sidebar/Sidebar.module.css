@@ -39,19 +39,11 @@
   flex-shrink: 0;
 }
 
-.brandMark {
-  width: 30px;
+.brandImg {
   height: 30px;
-  border-radius: var(--r-sm);
-  background: linear-gradient(135deg, var(--accent-700), var(--lime-600));
-  color: var(--n-0);
-  font-family: var(--font-mono);
-  font-weight: var(--fw-bold);
-  font-size: 10px;
-  display: grid;
-  place-items: center;
+  width: auto;
+  display: block;
   flex-shrink: 0;
-  letter-spacing: 0.02em;
 }
 
 .brandText {

@@ -40,7 +40,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
         {/* ── Brand ───────────────────────────────────── */}
         <div className={styles.brand}>
-          <span className={styles.brandMark}>BAJ</span>
+          <img src="/logo.png" alt="BAJ Ltd" className={styles.brandImg} />
           <div className={styles.brandText}>
             <span className={styles.brandName}>BAJ Ltd</span>
             <span className={styles.brandSub}>Staff Dashboard</span>
