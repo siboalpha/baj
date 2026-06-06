@@ -64,6 +64,10 @@ export default function LoginForm() {
       >
         Send OTP
       </Button>
+
+      <p className={styles.devHint}>
+        Dev: <span className={styles.devVal}>0781234567</span>
+      </p>
     </form>
   );
 }
